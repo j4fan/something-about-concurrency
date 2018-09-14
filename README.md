@@ -1,4 +1,4 @@
-##something-about-concurrency
+## something-about-concurrency
 > 本项目旨在记录本人在开发过程遇到的并发场景和常用的解决方案，项目将以场景+方案的形式呈现。
 
 ![TeamCity CodeBetter](https://img.shields.io/teamcity/codebetter/bt428.svg)
