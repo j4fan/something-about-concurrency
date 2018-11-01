@@ -1,4 +1,4 @@
-package CountDownLatchDemo;
+package sceneone.countdownlatchdemo;
 
 import java.util.Random;
 

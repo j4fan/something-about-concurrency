@@ -1,4 +1,4 @@
-package CountDownLatchDemo;
+package sceneone.countdownlatchdemo;
 
 import java.util.concurrent.*;
 
@@ -20,12 +20,13 @@ public class CountDownLatchTask {
 
         CountDownLatch countDownLatch = new CountDownLatch(TASK_SIZE);
 
-        for(int i=0;i<TASK_SIZE;i++){
-            es.execute(()->{
+        for (int i = 0; i < TASK_SIZE; i++) {
+            es.execute(() -> {
                 new SubTask().doJobWithSomeTime();
                 countDownLatch.countDown();
             });
         }
+
         countDownLatch.await();
         System.out.println("all task finished ");
         // do something else after all subtasks finished

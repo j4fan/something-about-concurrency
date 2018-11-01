@@ -9,4 +9,26 @@
 
 方案一：CountDownLatch
 
-to be continued...
+在CountDownLatchTask这个例子中，可以看到CountDownLatch的基本用法，使用起来是十分方便的，但是缺点也是比较明显，CountDownLatch会嵌入代码中造成一定的耦合。
+
+对于线程池的使用这里也有一点心得，当我们创建一个线程池，例如
+```
+private ExecutorService executorService = new ThreadPoolExecutor(5, 10,
+            10, TimeUnit.SECONDS, new LinkedBlockingDeque<>(), new DefaultThreadFactory("withdrawTask"));
+
+```
+调用时可以看到ExecutorService有execute方法,即可以创建一个实现了Runnable接口的子类
+```
+es.execute(() -> {
+                new SubTask() //其中SubTask实现了Runnable接口
+            });
+```
+可以使用匿名内部类，这样会更加方便，例如我们想在执行之后进行计数，进行CoundDownLatch的countdown()
+```
+es.execute(() -> {
+                new SubTask().doJobWithSomeTime();
+                countDownLatch.countDown();
+            });
+```
+
+未完待续...
