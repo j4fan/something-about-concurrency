@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-public class ReceiverGet {
+public class ReceiverGetSimple {
 
     private static final String GETQUEUE = "d-queue";
 

@@ -7,7 +7,7 @@ import com.rabbitmq.client.MessageProperties;
 import jdk.nashorn.internal.runtime.logging.Logger;
 
 @Logger
-public class Producer {
+public class ProducerSimple {
     private static final String TASK_QUEUE_NAME = "d-queue";
 
     public static void main(String[] args) {
