@@ -1,9 +1,6 @@
 package mq;
 
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.MessageProperties;
+import com.rabbitmq.client.*;
 import jdk.nashorn.internal.runtime.logging.Logger;
 
 @Logger
