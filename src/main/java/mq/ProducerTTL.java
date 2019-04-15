@@ -1,33 +1,27 @@
 package mq;
 
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.BuiltinExchangeType;
+import com.rabbitmq.client.Channel;
+
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
+
+import static mq.MqConsts.ROUTING_KEY_NAME;
+import static mq.MqConsts.TTL_EXCHANGE_NAME;
 
 public class ProducerTTL {
 
-    private static final String TASK_EXCHANGE_NAME = "my-ttl-exchange";
-
-    private static final String ROUTING_KEY_NAME = "routing-key";
-
-    public static void main(String[] args) {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        factory.setUsername("dev");
-        factory.setPassword("dev2");
-        factory.setPort(5672);
-        try (Connection connection = factory.newConnection();
-             Channel channel = connection.createChannel()) {
-            channel.exchangeDeclare(TASK_EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
-            String message  = "Hello, world!";
-            byte[] messageBodyBytes = "Hello, world!".getBytes();
-            AMQP.BasicProperties properties = new AMQP.BasicProperties.Builder()
-                    .expiration("10000")
-                    .build();
-            channel.basicPublish(TASK_EXCHANGE_NAME, ROUTING_KEY_NAME, properties, messageBodyBytes);
-
-            System.out.println(" [x] Sent '" + message + "'");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
+    public static void main(String[] args) throws IOException, TimeoutException {
+        Channel channel = MqCommon.createChannel();
+        channel.exchangeDeclare(TTL_EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
+        String message = "Hello, world!";
+        byte[] messageBodyBytes = "Hello, world!".getBytes();
+        //发送延迟消息，延迟10m后，超时后发往dlx
+        AMQP.BasicProperties properties = new AMQP.BasicProperties.Builder()
+                .expiration("10000")
+                .build();
+        channel.basicPublish(TTL_EXCHANGE_NAME, ROUTING_KEY_NAME, properties, messageBodyBytes);
+        System.out.println(" [x] Sent '" + message + "'");
     }
 }

@@ -1,27 +1,22 @@
 package mq;
 
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.BuiltinExchangeType;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.DeliverCallback;
 
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
+import static mq.MqConsts.FANOUT_EXCHANGE_NAME;
+
 public class ReceiverFanoutTwo {
 
-
-    private static final String TASK_EXCHANGE_NAME = "f-exchange";
-
     public static void main(String[] args) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        factory.setHost("localhost");
-        factory.setUsername("dev");
-        factory.setPassword("dev2");
-        factory.setPort(5672);
-        final Connection connection = factory.newConnection();
-        final Channel channel = connection.createChannel();
+        Channel channel = MqCommon.createChannel();
 
-        channel.exchangeDeclare(TASK_EXCHANGE_NAME, BuiltinExchangeType.FANOUT);
+        channel.exchangeDeclare(FANOUT_EXCHANGE_NAME, BuiltinExchangeType.FANOUT);
         String queueName = channel.queueDeclare().getQueue();
-        channel.queueBind(queueName,TASK_EXCHANGE_NAME,"");
+        channel.queueBind(queueName, FANOUT_EXCHANGE_NAME, "");
 
         System.out.println(" [*] Waiting for messages. To exit press CTRL+C");
         DeliverCallback deliverCallback = (consumerTag, delivery) -> {
