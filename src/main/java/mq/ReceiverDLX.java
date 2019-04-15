@@ -11,7 +11,7 @@ import static mq.MqConsts.DLX_EXCHANGE_NAME;
 import static mq.MqConsts.DLX_QUEUE_NAME;
 import static mq.MqConsts.ROUTING_KEY_NAME;
 
-public class DLXReceiver {
+public class ReceiverDLX {
 
     public static void main(String[] args) throws IOException, TimeoutException {
 

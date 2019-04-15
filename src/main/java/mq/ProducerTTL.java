@@ -1,7 +1,6 @@
 package mq;
 
 import com.rabbitmq.client.AMQP;
-import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 
 import java.io.IOException;
@@ -14,7 +13,6 @@ public class ProducerTTL {
 
     public static void main(String[] args) throws IOException, TimeoutException {
         Channel channel = MqCommon.createChannel();
-        channel.exchangeDeclare(TTL_EXCHANGE_NAME, BuiltinExchangeType.DIRECT);
         String message = "Hello, world!";
         byte[] messageBodyBytes = "Hello, world!".getBytes();
         //发送延迟消息，延迟10m后，超时后发往dlx
