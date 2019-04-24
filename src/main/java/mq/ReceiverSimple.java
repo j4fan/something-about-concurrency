@@ -23,7 +23,7 @@ public class ReceiverSimple {
             System.out.println(" [x] Received '" + message + "'");
             try {
                 System.out.println("do work of message start..." + message);
-                Thread.sleep(5000);
+                Thread.sleep(100000);
                 System.out.println("do work of mesage end ..." + message);
             } catch (InterruptedException e) {
                 e.printStackTrace();

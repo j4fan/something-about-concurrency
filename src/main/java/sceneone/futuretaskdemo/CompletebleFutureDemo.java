@@ -3,6 +3,7 @@ package sceneone.futuretaskdemo;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 public class CompletebleFutureDemo {
 
@@ -12,14 +13,16 @@ public class CompletebleFutureDemo {
     /**
      * simple future user
      */
-    public void calculateAsync() throws ExecutionException, InterruptedException {
+    public Future calculateAsync() throws ExecutionException, InterruptedException {
         CompletableFuture<String> completableFuture = new CompletableFuture<>();
         Executors.newCachedThreadPool().submit(() -> {
+            System.out.println("start...");
             Thread.sleep(5000L);
             completableFuture.complete(HELLO);
+            System.out.println("end....");
             return null;
         });
-        System.out.println(completableFuture.get().equals(HELLO));
+        return completableFuture;
     }
 
     /**
@@ -30,7 +33,7 @@ public class CompletebleFutureDemo {
         Executors.newCachedThreadPool().submit(() -> {
             Thread.sleep(5000L);
             completableFuture.cancel(false);
-            return null;
+            return 1;
         });
         System.out.println(completableFuture.get());
     }
@@ -74,9 +77,30 @@ public class CompletebleFutureDemo {
 
     }
 
+    public CompletableFuture thenComposeUsage() {
+        CompletableFuture completableFuture = CompletableFuture.supplyAsync(() -> "hello").
+                thenCombine(CompletableFuture.supplyAsync(() -> "world"),
+                        (s1, s2) -> s1 + s2);
+        return completableFuture;
+    }
+
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
-        new CompletebleFutureDemo().RunningMultipleFutureInParallel();
+        /**
+        Future future = new CompletebleFutureDemo().calculateAsync();
+        System.out.println("gaga");
+        Thread.sleep(3000L);
+        System.out.println(future.get());
+        System.out.println("end");
+         */
+
+        /**
+        CompletableFuture completableFuture = new CompletebleFutureDemo().thenComposeUsage();
+        System.out.println(completableFuture.get());
+         */
+
+
+
     }
 
 }
