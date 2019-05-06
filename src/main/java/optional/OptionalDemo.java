@@ -1,15 +1,15 @@
 package optional;
 
-import java.util.Optional;
+import com.sun.javafx.binding.Logging;
+
+import java.util.ArrayList;
 
 public class OptionalDemo {
 
     public static void main(String[] args) {
-
-        Optional<String> s = Optional.of("test");
-        Optional<String> s2 = s.flatMap(s1->Optional.of("TEST"));
-        System.out.println(s2.get());
-
+        System.out.println(OptionalDemo.class.getClassLoader());
+        System.out.println(Logging.class.getClassLoader());
+        System.out.println(ArrayList.class.getClassLoader());
     }
 
 }
