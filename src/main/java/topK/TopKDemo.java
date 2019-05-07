@@ -20,7 +20,7 @@ public class TopKDemo {
         });
 
         PriorityQueue priorityQueue = new PriorityQueue(TOP_K_SIZE, Comparator.comparingInt(i->map.get(i)));
-        map.entrySet().stream().forEach(entry->{
+        map.entrySet().forEach(entry->{
             if(priorityQueue.size()<TOP_K_SIZE){
                 priorityQueue.add(entry.getKey());
             }else{
@@ -31,7 +31,7 @@ public class TopKDemo {
             }
         });
 
-        priorityQueue.stream().forEach(i->{
+        priorityQueue.forEach(i->{
             System.out.println(i.toString());
         });
     }
