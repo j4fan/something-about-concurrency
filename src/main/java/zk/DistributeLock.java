@@ -2,7 +2,7 @@ package zk;
 
 public interface DistributeLock {
 
-    void lock();
+    boolean lock();
 
-    void unlock();
+    boolean unlock();
 }
