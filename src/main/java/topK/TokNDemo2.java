@@ -53,3 +53,4 @@ public class TokNDemo2 {
         System.out.println(result.stream().map((Integer t) -> t.toString()).collect(Collectors.joining(",")));
     }
 }
+
