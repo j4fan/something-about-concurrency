@@ -1,9 +1,9 @@
 package sceneone.printInOrder;
 
 /**
- * wait/notify
+ *
  */
-public class PrintInOrderWithNotify {
+public class PrintInOrderWithNotifySafe {
 
     private static Object preMonitor = new Object();
     private static Object subMonitor = new Object();
@@ -11,46 +11,51 @@ public class PrintInOrderWithNotify {
     public static void main(String[] args) {
 
         Thread threadOne = new Thread(() -> {
+            //threadOne业务逻辑
+            System.out.println("thread one start");
             synchronized (preMonitor) {
-                try {
-                    Thread.sleep(2000L);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
                 System.out.println("A");
                 preMonitor.notify();
             }
+            System.out.println("thread one end");
         });
+
         Thread threadTwo = new Thread(() -> {
-            synchronized (preMonitor){
+            //threadTwo业务逻辑
+            System.out.println("thread two start");
+            synchronized (preMonitor) {
+
                 try {
                     preMonitor.wait();
-                    Thread.sleep(2000L);
-                    System.out.println("B");
-                    synchronized (subMonitor){
-                        subMonitor.notify();
-                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-
+                System.out.println("B");
+                synchronized (subMonitor) {
+                    subMonitor.notify();
+                }
             }
+            System.out.println("thread two end");
         });
-        Thread threadThree = new Thread(()->{
-            synchronized (subMonitor){
+
+        Thread threadThree = new Thread(() -> {
+            System.out.println("thread three start");
+            //threadThree业务逻辑
+            synchronized (subMonitor) {
+
                 try {
                     subMonitor.wait();
-                    Thread.sleep(2000L);
                     System.out.println("C");
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
             }
+            System.out.println("thread three end");
         });
 
-        threadTwo.start();
         threadThree.start();
         threadOne.start();
+        threadTwo.start();
 
     }
 
