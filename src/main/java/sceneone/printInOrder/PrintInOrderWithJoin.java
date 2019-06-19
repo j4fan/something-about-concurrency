@@ -7,7 +7,7 @@ package sceneone.printInOrder;
  */
 public class PrintInOrderWithJoin {
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
 
         Thread threadOne = new Thread(() -> {
             //threadOne 业务逻辑
@@ -38,7 +38,6 @@ public class PrintInOrderWithJoin {
         threadThree.start();
         threadOne.start();
         threadTwo.start();
-
 
     }
 
