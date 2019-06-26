@@ -2,7 +2,7 @@ package common;
 
 public class CamelToUnderscore {
 
-    private  String CamelToUnderScore(String camelString){
+    private String CamelToUnderScore(String camelString){
         StringBuffer sb = new StringBuffer();
         String lowerString = getLowerCaseString(camelString);
         sb.append(lowerString.substring(0,1));
